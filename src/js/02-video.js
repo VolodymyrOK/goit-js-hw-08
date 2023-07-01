@@ -10,7 +10,6 @@ var saveTime = localStorage.getItem('videoplayer-current-time');
 // if (!saveTime) saveTime = '0.0000001';
 
 player.setCurrentTime(saveTime).catch(function (error) {
-  console.log(error.name);
   switch (error.name) {
     case 'RangeError':
       alert('Video playback time error. Press the play button.');
