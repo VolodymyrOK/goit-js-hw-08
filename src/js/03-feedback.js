@@ -38,5 +38,6 @@ function onClickSubmit(event) {
   if (!dataInStorage || !dataInStorage.email || !dataInStorage.message) return;
   console.log(JSON.parse(localStorage.getItem(KEY_IN_STORAGE)));
   event.target.reset();
-  localStorage.clear();
+  // localStorage.clear();
+  localStorage.removeItem(KEY_IN_STORAGE);
 }
