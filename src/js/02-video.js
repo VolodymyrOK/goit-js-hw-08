@@ -4,10 +4,13 @@ const throttle = require('lodash.throttle');
 
 const iframe = document.querySelector('iframe');
 const player = new Player(iframe);
+const KEY_IN_STORAGE = 'videoplayer-current-time';
 
-const saveTime = localStorage.getItem('videoplayer-current-time');
+var saveTime = localStorage.getItem('videoplayer-current-time');
+if (!saveTime) saveTime = 0.0000001;
 
 player.setCurrentTime(saveTime).catch(function (error) {
+  console.log(error.name);
   switch (error.name) {
     case 'RangeError':
       alert('Playback error.Reload the page.');
