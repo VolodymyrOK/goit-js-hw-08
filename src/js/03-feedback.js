@@ -6,36 +6,37 @@ const refs = {
 };
 
 const { form, input, textarea } = refs;
-const KEY_STORAGE = 'feedback-form-state';
-const data = {};
-form.addEventListener('input', throttle(onEnterInput, 500));
-form.addEventListener('submit', onClickSubmit);
+const KEY_IN_STORAGE = 'feedback-form-state';
+const dataInStorage = {};
 
 checkStorage();
 
+form.addEventListener('input', throttle(onEnterInput, 500));
+form.addEventListener('submit', onClickSubmit);
+
 function onEnterInput(event) {
   if (event.target.name === 'email') {
-    data.email = event.target.value;
-    localStorage.setItem(KEY_STORAGE, JSON.stringify(data));
+    dataInStorage.email = event.target.value;
   }
   if (event.target.name === 'message') {
-    data.message = event.target.value;
-    localStorage.setItem(KEY_STORAGE, JSON.stringify(data));
+    dataInStorage.message = event.target.value;
   }
+  localStorage.setItem(KEY_IN_STORAGE, JSON.stringify(dataInStorage));
 }
 
 function checkStorage() {
-  const dataStorage = JSON.parse(localStorage.getItem(KEY_STORAGE));
-  if (!dataStorage || !dataStorage.email || !dataStorage.message) return;
-  input.value = dataStorage.email;
-  textarea.value = dataStorage.message;
+  const dataInStorage = JSON.parse(localStorage.getItem(KEY_IN_STORAGE));
+  if (!dataInStorage || !dataInStorage.email || !dataInStorage.message) return;
+  console.log(dataInStorage);
+  input.value = dataInStorage.email;
+  textarea.value = dataInStorage.message;
 }
 
 function onClickSubmit(event) {
   event.preventDefault();
-  const dataStorage = JSON.parse(localStorage.getItem(KEY_STORAGE));
-  if (!dataStorage || !dataStorage.email || !dataStorage.message) return;
-  console.log(JSON.parse(localStorage.getItem(KEY_STORAGE)));
+  const dataInStorage = JSON.parse(localStorage.getItem(KEY_IN_STORAGE));
+  if (!dataInStorage || !dataInStorage.email || !dataInStorage.message) return;
+  console.log(JSON.parse(localStorage.getItem(KEY_IN_STORAGE)));
   event.target.reset();
   localStorage.clear();
 }
