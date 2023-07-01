@@ -7,13 +7,13 @@ const player = new Player(iframe);
 const KEY_IN_STORAGE = 'videoplayer-current-time';
 
 var saveTime = localStorage.getItem('videoplayer-current-time');
-if (!saveTime) saveTime = 0.0000001;
+if (!saveTime) saveTime = '0.0000001';
 
 player.setCurrentTime(saveTime).catch(function (error) {
   console.log(error.name);
   switch (error.name) {
     case 'RangeError':
-      alert('Playback error.Reload the page.');
+      alert('Video playback time error. Press the play button.');
       break;
 
     default:
