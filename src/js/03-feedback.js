@@ -15,29 +15,35 @@ form.addEventListener('input', throttle(onEnterInput, 500));
 form.addEventListener('submit', onClickSubmit);
 
 function onEnterInput(event) {
-  if (event.target.name === 'email') {
-    dataInStorage.email = event.target.value;
-  }
-  if (event.target.name === 'message') {
-    dataInStorage.message = event.target.value;
-  }
+  // if (event.target.name === 'email') {
+  //   dataInStorage.email = event.target.value;
+  // }
+  // if (event.target.name === 'message') {
+  //   dataInStorage.message = event.target.value;
+  // }
+  dataInStorage[event.target.name] = event.target.value;
   localStorage.setItem(KEY_IN_STORAGE, JSON.stringify(dataInStorage));
 }
 
 function checkStorage() {
-  const dataInStorage = JSON.parse(localStorage.getItem(KEY_IN_STORAGE));
-  if (!dataInStorage || !dataInStorage.email || !dataInStorage.message) return;
-  console.log(dataInStorage);
-  input.value = dataInStorage.email;
-  textarea.value = dataInStorage.message;
+  try {
+    const dataInStorage = JSON.parse(localStorage.getItem(KEY_IN_STORAGE));
+    if (!dataInStorage || !dataInStorage.email || !dataInStorage.message)
+      return;
+    input.value = dataInStorage.email;
+    textarea.value = dataInStorage.message;
+  } catch {
+    alert('Error in local storage! Empty key value.');
+  }
 }
 
 function onClickSubmit(event) {
   event.preventDefault();
   const dataInStorage = JSON.parse(localStorage.getItem(KEY_IN_STORAGE));
   if (!dataInStorage || !dataInStorage.email || !dataInStorage.message) return;
-  console.log(JSON.parse(localStorage.getItem(KEY_IN_STORAGE)));
-  event.target.reset();
+  console.log(dataInStorage);
+  // form.reset();
   // localStorage.clear();
+  event.target.reset();
   localStorage.removeItem(KEY_IN_STORAGE);
 }
